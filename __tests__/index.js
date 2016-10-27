@@ -5,10 +5,15 @@ describe('jest-mock-fs-bug', () => {
 
     it('should break', () => {
         mockFS({
-            'someFile.yml': 'test',
+            ['/test/someFile.yml']: 'test',
         });
 
-        expect(fs.readFileSync('someFile.yml').toString()).toBe('test');
+        expect(fs.readFileSync('/test/someFile.yml').toString()).toBe('test');
+    });
+
+    afterEach(() => {
+        // If this one is not called the weird bug shows
+        // mockFS.restore();
     });
 
 });
